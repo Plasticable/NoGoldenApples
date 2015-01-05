@@ -24,6 +24,7 @@ public class Main extends JavaPlugin implements Listener
 	{
 		getServer().getPluginManager().registerEvents(this, this);
 		config = getConfig();
+		saveDefaultConfig();
 		
 		joinNotifyEnabled = config.getBoolean("joinNotifyEnabled");
 		joinNotify = config.getString("joinNotify");

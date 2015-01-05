@@ -16,7 +16,7 @@ import org.bukkit.potion.PotionEffectType;
 public class Main extends JavaPlugin implements Listener
 {
 	private FileConfiguration config;
-	private String joinNotify, warning, globalNotify;
+	private String joinNotify, warning, globalNotify, goldenCarrotName, goldenAppleName, immunityMessage;
 	private int potionDuration, potionAmplifier;
 	private boolean globalNotifyEnabeled, joinNotifyEnabled;
 	
@@ -32,7 +32,10 @@ public class Main extends JavaPlugin implements Listener
 		globalNotifyEnabeled = config.getBoolean("isGlobalNotifyEnabled");
 		potionDuration = config.getInt("potionDuration");
 		potionAmplifier = config.getInt("potionAmplifier");
-				
+		goldenCarrotName = config.getString("goldenCarrotName");
+		goldenAppleName = config.getString("goldenAppleName");
+		immunityMessage = config.getString("steelTooth");
+		
 	}
 
 	
@@ -48,14 +51,31 @@ public class Main extends JavaPlugin implements Listener
 	public void onItemConsume(PlayerItemConsumeEvent event)
 	{
 		Player player = event.getPlayer();
-		if(player.getItemInHand().getType() == Material.GOLDEN_APPLE)
+		if(!player.hasPermission("nogoldenapples.immunity"))
 		{
-			player.sendMessage(ChatColor.RED + warning);
-			if(globalNotifyEnabeled)
-				player.getServer().broadcastMessage(ChatColor.YELLOW + globalNotify.replace("{PLAYER}", player.getName()));
-			player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, potionDuration*20, potionAmplifier));
-			event.setCancelled(true);
+			if(player.getItemInHand().getType() == Material.GOLDEN_APPLE)
+			{
+				player.sendMessage(ChatColor.RED + warning.replace("{ITEM}", goldenAppleName));
+				
+				if(globalNotifyEnabeled)
+					player.getServer().broadcastMessage(ChatColor.YELLOW + globalNotify.replace("{PLAYER}", player.getName()).replace("{ITEM}", goldenAppleName));
+				
+				player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, potionDuration*20, potionAmplifier));
+				event.setCancelled(true);
+			}
+			if(player.getItemInHand().getType() == Material.GOLDEN_CARROT)
+			{
+				player.sendMessage(ChatColor.RED + warning.replace("{ITEM}", goldenCarrotName));
+				
+				if(globalNotifyEnabeled)
+					player.getServer().broadcastMessage(ChatColor.YELLOW + globalNotify.replace("{PLAYER}", player.getName()).replace("{ITEM}", goldenCarrotName));
+				
+				player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, potionDuration*20, potionAmplifier));
+				event.setCancelled(true);
+			}
 		}
+		else
+			player.sendMessage(ChatColor.GREEN + immunityMessage);
 		
 	}
 }

@@ -1,0 +1,29 @@
+#Global message when sombody try to bit golden food
+globalNotify: '{PLAYER} сломал зубы об {ITEM}' 
+
+#Message when sombody try to bit golden food
+warning: 'Ты пытался укусить {ITEM} и сломал зуб'
+
+#Message when player with immunity try it
+steelTooth: 'Ты съел золотую еду потому, что у тебя есть стальные зубы!' 
+
+#Message when player join
+joinNotify: 'Не ешь золотые яблоки и золотую морковь, а то зубы сломаешь!' 
+
+#Golden apple name
+goldenAppleName: 'золотое яблоко' 
+
+#Golden carrot name
+goldenCarrotName: 'золотую морковь'
+
+#Is join notify enabled (true|false)
+joinNotifyEnabled: true 
+
+#Is global notify enabled (true|false)
+isGlobalNotifyEnabled: true  
+
+#Potion duration on 1 apmlifier. (1 duration = 0.5 health heart) 
+potionDuration: 3 
+
+#Potion amplifier
+potionAmplifier: 1
